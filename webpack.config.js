@@ -3,7 +3,8 @@ var webpack = require('webpack');
 var publicPath = 'http://localhost:3000/';
 
 module.exports = {
-  devtool: 'source-map',
+  cache: true,
+  devtool: 'eval-source-map',
   entry: [
     path.join(__dirname, 'web/static/js/entry.jsx'),
     'webpack-dev-server/client?http://localhost:3000',
@@ -18,21 +19,27 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: ['babel'],
+        loader: 'babel',
         include: path.join(__dirname, 'web/static/js'),
-        exclude: /node_modules/,
+        exclude: path.join(__dirname, 'node_modules'),
+        query: {
+          cacheDirectory: true
+        }
       },
     ],
   },
   plugins: [
+    new webpack.DllReferencePlugin({
+      context: path.join(__dirname, 'web/static/js'),
+      manifest: require('./dll/vendor-manifest.json')
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
   ],
   resolve: {
-    root: path.join(__dirname, ''),
+    root: path.join(__dirname, 'web/static/js'),
     modulesDirectories: [
-      'node_modules',
-      'web/static/js',
+      'node_modules'
     ],
     extensions: ['', '.js', '.jsx'],
     alias: {

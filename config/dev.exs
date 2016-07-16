@@ -11,7 +11,7 @@ config :prodctlyze, Prodctlyze.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [node: ["./node_modules/.bin/webpack-dev-server", "--watch-stdin", "--colors",
+  watchers: [npm: ["start",
     cd: Path.expand("../", __DIR__)]]
 
 

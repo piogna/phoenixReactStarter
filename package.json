@@ -7,6 +7,11 @@
     "test": "test"
   },
   "scripts": {
+    "clean": "rimraf priv/static/js",
+    "build:dll": "./node_modules/.bin/webpack --config webpack.dll.config.js",
+    "build:webpack": "./node_modules/.bin/webpack --config webpack.config.js",
+    "build:all": "npm run clean && npm run build:dll && npm run build:webpack",
+    "start": "npm run build:dll && ./node_modules/.bin/webpack-dev-server --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
